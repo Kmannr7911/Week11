@@ -1,0 +1,10 @@
+#bbg{
+    background: rgb(2, 0, blu36e);
+    background: linear-gradient(90deg, rgba(2,0,26,1) 0%, rgba(9,9,121,1) 20%, rgba(212, 123, 23));
+}
+
+.container{
+    text-align: center;
+    color: white;
+    padding: 15px 0;
+}
