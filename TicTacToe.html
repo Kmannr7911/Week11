@@ -5,27 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TIC TAC TOE</title>
-    <link rel="stylesheet" type="text" href="TicTacToe.css">
-
+    <link rel="stylesheet" href="TicTacToe.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
-<script src="TicTacToe.js"></script>
-<script src="TicTacToe.css"></script>
 
-<body>
-    <div class="container" id="main">
-        <span id="turn">Tic Tac Toe</span>
-    
-        <div class="box" style="border-left: 0; border-top: 0" id="box1"></div>
-        <div class="box" style="border-top: 0" id="box2"></div>
-        <div class="box" style="border-top: 0; border-right: 0" id="box3"></div>
-        <div class="box" style="border-left: 0" id="box4"></div>
-        <div class="box" id="box5"></div>
-        <div class="box" style="border-right: 0" id="box6"></div>
-        <div class="box" style="border-left: 0; border-bottom: 0" id="box7"></div>
-        <div class="box" style="border-bottom: 0" id="box8"></div>
-        <div class="box" style="border-right: 0; border-bottom: 0" id="box9"></div>
-      </div>
-    
-      <button class="btn btn-rounded" id="replay">Play Again</button>
+    <body>
+
+        <div class="gamecontainer">
+        <table>
+
+                <tr name="0">
+                    <td name="0"></td>
+                    <td name="1"></td>
+                    <td name="2"></td>
+                </tr>
+                <tr name = "1">
+                    <td name="0"></td>
+                    <td name="1"></td>
+                    <td name="2"></td>
+                </tr>
+                <tr name="2">
+                    <td name="0"></td>
+                    <td name="1"></td>
+                    <td name="2"></td>
+                </tr>
+
+        </table>    
+
+        <button class="player" name="1">Player 1</button>
+        <button class="player" name="2">Player 2</button>
+
+        <div class="nextmoveby">Next move by: <span name="whoseturn">X</span> </div>
+        <div class="gameover">Game Over! Player <span name="whowon"></span> won! Congragulations!!</div>    
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
+<script src="TicTacToe.js"></script>
+
 </body>
 </html>

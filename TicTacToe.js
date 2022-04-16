@@ -1,88 +1,131 @@
-var turn = document.getElementById("turn"),
-      boxes = document.querySelectorAll("#main div"), X_or_O = 0;
+var currentPlayerName = 'X';
+var rowName;
+var columnName;
 
-    function selectBoxes(b1, b2, b3) {
-      b1.classList.add("win");
-      b2.classList.add("win");
-      b3.classList.add("win");
-      turn.innerHTML = p1.innerHTML + " is a winner";
-      turn.style.fontSize = "40px";
-    }
+var gameOver = false;
 
-    function chooseWinner() {
-
-      var box1 = document.getElementById("box1"),
-        box2 = document.getElementById("box2"),
-        box3 = document.getElementById("box3"),
-        box4 = document.getElementById("box4"),
-        box5 = document.getElementById("box5"),
-        box6 = document.getElementById("box6"),
-        box7 = document.getElementById("box7"),
-        box8 = document.getElementById("box8"),
-        box9 = document.getElementById("box9");
-
-      if (box1.innerHTML !== "" && box1.innerHTML === box2.innerHTML && box1.innerHTML === box3.innerHTML)
-        selectBoxes(box1, box2, box3);
-
-      if (box4.innerHTML !== "" && box4.innerHTML === box5.innerHTML && box4.innerHTML === box6.innerHTML)
-        selectBoxes(box4, box5, box6);
-
-      if (box7.innerHTML !== "" && box7.innerHTML === box8.innerHTML && box7.innerHTML === box9.innerHTML)
-        selectBoxes(box7, box8, box9);
-
-      if (box1.innerHTML !== "" && box1.innerHTML === box4.innerHTML && box1.innerHTML === box7.innerHTML)
-        selectBoxes(box1, box4, box7);
-
-      if (box2.innerHTML !== "" && box2.innerHTML === box5.innerHTML && box2.innerHTML === box8.innerHTML)
-        selectBoxes(box2, box5, box8);
-
-      if (box3.innerHTML !== "" && box3.innerHTML === box6.innerHTML && box3.innerHTML === box9.innerHTML)
-        selectBoxes(box3, box6, box9);
-
-      if (box1.innerHTML !== "" && box1.innerHTML === box5.innerHTML && box1.innerHTML === box9.innerHTML)
-        selectBoxes(box1, box5, box9);
-
-      if (box3.innerHTML !== "" && box3.innerHTML === box5.innerHTML && box3.innerHTML === box7.innerHTML)
-        selectBoxes(box3, box5, box7);
-
-    }
+var gridDimension = 3;
 
 
+$('span[name="whoseturn"]').text(currentPlayerName);
+$('.gameover').hide();
 
-    for (var i = 0; i < boxes.length; i++) {
-      boxes[i].onclick = function (){
-        if (this.innerHTML !== "X" && this.innerHTML !== "O") {
-          if (X_or_O % 2 === 0) {
-            console.log(X_or_O);
-            this.innerHTML = "X";
-            turn.innerHTML = "O Turn Now";
-            getWinner();
-            X_or_O += 1;
+$('.player[name="X"]').addClass('highlight');
+$('.player[name="O"]').addClass('unhighlight');
 
-          } else {
-            console.log(X_or_O);
-            this.innerHTML = "O";
-            turn.innerHTML = "X Turn Now";
-            getWinner();
-            X_or_O += 1;
-          }
-        }
+$('td').click(
+		function() {
 
-      };
-    }
+			if(gameOver) {
+				return;				
+			} 
 
-    document.getElementById('replay').addEventListener('click', replay);
-
-    function replay() {
-
-      for (var i = 0; i < boxes.length; i++) {
-        boxes[i].classList.remove("win");
-        boxes[i].innerHTML = "";
-        turn.innerHTML = "Play";
-        turn.style.fontSize = "25px";
-
+      if($(this).text() != '') {
+        return;
       }
 
-    }
 
-    }
+      if(currentPlayerName == 'X'){
+        $(this).text('X');
+      } else{
+
+        $(this).text('O');
+      }
+
+			rowName = $(this).parent().attr("name");
+			columnName = $(this).attr("name");
+
+
+			if(checkIfCurrentPlayerWon_CheckRow() || checkIfCurrentPlayerWon_CheckColumn()
+				|| checkIfCurrentPlayerWon_CheckLeftToRightDiagonal()
+				|| checkIfCurrentPlayerWon_CheckRightToLeftDiagonal()) {
+				
+				gameOver = true;
+				
+				$('.gameover').show();
+				$('span[name="whowon"]').text(currentPlayerName);
+
+				$('.nextmoveby').hide();
+        return;
+			}
+
+			if(currentPlayerName == 'X') {
+				$('.player[name="X"]').removeClass('highlight');
+				$('.player[name="X"]').addClass('unhighlight');
+
+				$('.player[name="O"]').removeClass('unhighlight');
+				$('.player[name="O"]').addClass('highlight');
+
+				currentPlayerName = 'O';
+				$('span[name="whoseturn"]').text('O');
+			} else {
+
+				$('.player[name="O"]').removeClass('highlight');
+				$('.player[name="O"]').addClass('unhighlight');
+
+				$('.player[name="X"]').removeClass('unhighlight');
+				$('.player[name="X"]').addClass('highlight');
+
+				currentPlayerName = 'X';
+				$('span[name="whoseturn"]').text('X');
+			}
+		}
+	);
+
+
+function checkIfCurrentPlayerWon_CheckRow() {
+	var currentRow = $('tr[name="' + rowName + '"]');
+	var currentPlayerWon = true;
+	currentRow.children().each(function() {
+		if($(this).text() != currentPlayerName) {
+			currentPlayerWon = false;
+		}
+  });
+  return currentPlayerWon;
+}
+
+
+function checkIfCurrentPlayerWon_CheckColumn() {
+	var currentPlayerWon = true;
+	$('tr').each(function() {
+		var col = $(this).find('td[name=' + columnName + ']');
+		if(col.text() != currentPlayerName) {
+			currentPlayerWon = false;
+		}
+	});
+	return currentPlayerWon;
+}
+
+function checkIfCurrentPlayerWon_CheckLeftToRightDiagonal() {
+	var currentPlayerWon = true;
+
+	$('tr').each(function() {
+		var currentRowName = $(this).attr("name");
+		var col = $(this).find('td[name=' + currentRowName + ']');
+		if(col.text() != currentPlayerName) {
+			currentPlayerWon = false;
+		}
+	});
+	return currentPlayerWon;
+}
+
+function checkIfCurrentPlayerWon_CheckRightToLeftDiagonal() {
+	var currentPlayerWon = true;
+
+	var rowNumberColumnNumberTotal = parseInt(rowName) + parseInt(columnName);
+
+	if(rowNumberColumnNumberTotal != (gridDimension-1)) {
+		return false;
+	}
+	
+	$('tr').each(function() {
+		var currentRowName = $(this).attr("name");
+		var currentRowNumber = parseInt(currentRowName);
+		var columnNumberToCheck = rowNumberColumnNumberTotal - currentRowNumber;
+		var col = $(this).find('td[name=' + columnNumberToCheck + ']');
+		if(col.text() != currentPlayerName) {
+			currentPlayerWon = false;
+		}
+	});
+	return currentPlayerWon;
+}
