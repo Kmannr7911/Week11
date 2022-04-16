@@ -13,7 +13,7 @@ $('.gameover').hide();
 $('.player[name="X"]').addClass('highlight');
 $('.player[name="O"]').addClass('unhighlight');
 
-$('td').click(
+$('td').click (
 		function() {
 
 			if(gameOver) {

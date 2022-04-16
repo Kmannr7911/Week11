@@ -20,6 +20,10 @@ td{
 	background-color: cadetblue;
 }
 
+.highlight{
+	border: 5px solid greenyellow;
+}
+
 .player[name="0"]{
 	background-color: cadetblue;
 }
@@ -35,9 +39,11 @@ td{
 .gameover{
 	background-color: green;
 	font-size: xx-large;
+	font-style: normal;
 }
 
 .gamecontainer{
 	margin: 20px;
 	width: 500px;
+	border: rebeccapurple;
 }
