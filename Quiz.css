@@ -1,0 +1,13 @@
+table{
+    border: 5px solid gray;
+}
+
+td{
+    border: 1px solid green;
+    width: auto;
+    height: auto;
+    text-align: justify;
+    font-size: large;
+}
+
+
